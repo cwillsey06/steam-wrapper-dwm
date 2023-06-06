@@ -10,9 +10,20 @@ main () {
 	case "$1" in
 		-n|--name) APPID="$(get_steam_appid "$2")" ;;
 		-i|--id) APPID="$2" ;;
-		[?]) print_usage ;;
+		*) print_usage
+			 exit 1 ;;
 	esac
+	x_init &
 	run_steam_app "$APPID"
+}
+
+finish () {
+	kill "$(jobs -p)"
+}
+
+print_usage () {
+	printf '%s\n' \
+		'steam-wrapper-dwm [-n|--name {appname}] [-i|--id {appid}]'
 }
 
 get_steam_appid () {
@@ -24,14 +35,6 @@ get_steam_appid () {
 		| grep -i "$1"
 }
 
-run_steam_app () {
-	steamcmd='steam'
-	# assume flatpak is in use if a steam binary doesn't exist
-	[ ! -f "$(command -v steam)" ] \
-		&& steamcmd='flatpak run com.valvesoftware.Steam'
-	"$steamcmd" -applaunch "$1"
-}
-
 x_init () {
 	# use .xinitrc if it exists
 	xinitrc="$HOME/.xinitrc"
@@ -40,13 +43,17 @@ x_init () {
 		&& return 0
 	exec pipewire-pulse &
 	exec pipewire &
-	exec dwm &
+	exec dwm
 }
 
-print_usage () {
-	printf '%s\n' \
-		'steam-wrapper-dwm [-n|--name {appname}] [-i|--id {appid}]'
+run_steam_app () {
+	steamcmd='steam'
+	# assume flatpak is in use if a steam binary doesn't exist
+	[ ! -f "$(command -v steam)" ] \
+		&& steamcmd='flatpak run com.valvesoftware.Steam'
+	$steamcmd -applaunch "$1"
 }
 
 main "$@"
+trap finish EXIT
 
