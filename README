@@ -1,0 +1,39 @@
+steam-wrapper-dwm
+=================
+steam-wrapper-dwm creates a dedicated dwm
+environment for running whiny Steam games
+
+$ steam-wrapper-dwm 
+    [-n|--name {gametitle}]
+    [-i|--id {gameid}]
+
+
+Usage
+-----
+This software is intended to be used in a
+.destkop file, here's an example for ya':
+
+  [Desktop Entry]
+  Type=XSession
+  Exec=/path/to/steam-wrapper-dwm --id 312520
+  Name=Rain World
+
+Note:
+This is mostly for stubborn Wayland users
+
+If you can find a use for this, then good
+for you. There's a dozen different things
+you should probably consider trying until
+you settle on this janky "wrapper" thingy
+
+...Unless you're trying to run Rain World
+
+
+Credits
+-------
+* software, patches: https://suckless.org
+
+
+Today, a dwm based wrapper.
+Tomorrow, a dedicated WM...
+
