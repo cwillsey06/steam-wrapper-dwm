@@ -4,8 +4,8 @@ steam-wrapper-dwm creates a dedicated dwm
 environment for running whiny Steam games
 
 $ steam-wrapper-dwm 
-    [-n|--name {gametitle}]
-    [-i|--id {gameid}]
+    [-n|--name {appname}]
+    [-i|--id {appid}]
 
 
 Usage
